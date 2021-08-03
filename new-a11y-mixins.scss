@@ -1,0 +1,119 @@
+// A11y mixins
+
+// a11y-font-sizes()
+// This mixin is used to set the font-sizes on the lg and xl font size settings.
+// the defaults are the usual lg and xl font sizes, or you can choose to
+// pass in custom sizes.
+// The line-height is set to always be 8px larger than the font-size used, as
+// per UX team's decision.
+@mixin a11y-font-sizes($lg: $a11y-lg-font-size, $xl: $a11y-xl-font-size) {
+  .font-lg & {
+    font-size: $lg;
+    line-height: calc(#{$lg} + 8px);
+  }
+  .font-xl & {
+    font-size: $xl;
+    line-height: calc(#{$xl} + 8px);
+  }
+}
+
+// a11y-contrast-changes()
+// This mixin is for common changes made according to the contrast settings,
+// mostly the two high contrast settings, in the Accessibility menu. Pass in
+// arguments, in any order, correstponding to style you want to change.
+// example:
+// @include a11y-contrast-changes(background, text, border-top);
+//
+// Use 'color' to set the appropriate foreground color variable as the font
+// color for elements that normally have unique text color.
+//
+// Use 'background' to set the appropriate background color variable as the
+// background for elements that normally have unique background color.
+//
+// Use 'background-alt' to set the appropriate background-alt color variable as
+// the background for elements that normally have unique background color.
+//
+// Use 'fill' to set the appropriate foreground color variable as the fill for
+// icons that normally have unique fill color.
+//
+// Use 'outline' in the rare case where you want the look of a 2px border on all
+// using the appropriate foreground color variable without affecting the size of
+// the element.
+//
+// Use 'border-color' to change the border-color of elements that already have
+// a border to the appropriate foreground color variable.
+//
+// Use 'border' to add a border using the appropriate foreground color variable
+// to elements that don't normally have a border
+// or
+// Use 'border-top', 'border-right', 'border-bottom', or 'border-left' to add
+// a border to that side using the appropriate foreground color variable
+@mixin a11y-contrast-changes($rules...) {
+  .contrast-low & {
+    @each $rule in $rules {
+      @if $rule == 'border-color' {
+        border-color: $contrast-low-foreground;
+      }
+    }
+  }
+
+  .contrast-light & {
+    @each $rule in $rules {
+      @if $rule == 'color' {
+        color: $contrast-light-foreground;
+      } @else if $rule == 'background' {
+        background: $contrast-light-background;
+      } @else if $rule == 'background-alt' {
+        background: $contrast-light-background-alt;
+      } @else if $rule == 'fill' {
+        fill: $contrast-light-foreground;
+      } @else if $rule == 'outline' {
+        outline: 2px solid $contrast-light-foreground;
+      } @else if $rule == 'border-color' {
+        border-color: $contrast-light-foreground;
+      } @else if $rule == 'border' {
+        border: 2px solid $contrast-light-foreground;
+      } @else if $rule == 'border-top' {
+        border-top: 2px solid $contrast-light-foreground;
+      } @else if $rule == 'border-right' {
+        border-right: 2px solid $contrast-light-foreground;
+      } @else if $rule == 'border-bottom' {
+        border-bottom: 2px solid $contrast-light-foreground;
+      } @else if $rule == 'border-left' {
+        border-left: 2px solid $contrast-light-foreground;
+      } @else {
+        @error "invalid argument: #{$rule}.";
+      }
+    }
+  }
+
+  .contrast-dark & {
+    @each $rule in $rules {
+      @if $rule == 'color' {
+        color: $contrast-dark-foreground;
+      } @else if $rule == 'background' {
+        background: $contrast-dark-background;
+      } @else if $rule == 'background-alt' {
+        background: $contrast-dark-background-alt;
+      } @else if $rule == 'fill' {
+        fill: $contrast-dark-foreground;
+      } @else if $rule == 'outline' {
+        outline: 2px solid $contrast-dark-foreground;
+      } @else if $rule == 'border-color' {
+        border-color: $contrast-dark-foreground;
+      } @else if $rule == 'border' {
+        border: 2px solid $contrast-dark-foreground;
+      } @else if $rule == 'border-top' {
+        border-top: 2px solid $contrast-dark-foreground;
+      } @else if $rule == 'border-right' {
+        border-right: 2px solid $contrast-dark-foreground;
+      } @else if $rule == 'border-bottom' {
+        border-bottom: 2px solid $contrast-dark-foreground;
+      } @else if $rule == 'border-left' {
+        border-left: 2px solid $contrast-dark-foreground;
+      } @else {
+        @error "invalid argument #{$rule}.";
+      }
+    }
+  }
+}
