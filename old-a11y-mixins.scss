@@ -1,0 +1,128 @@
+// A11y mixins
+
+// used to set the font sizes on the lg and xl a11y font settings.
+// the defaults are the usual lg and xl font sizes, or you can choose to
+// pass in custom sizes.
+// the line-height is set to always be 8px larger than the font-sized used,
+// matching the previously decided on a11y line-height sizes.
+@mixin a11y-font-sizes($lg: $a11y-lg-font-size, $xl: $a11y-xl-font-size) {
+  .font-lg & {
+    font-size: $lg;
+    line-height: calc(#{$lg} + 8px);
+  }
+  .font-xl & {
+    font-size: $xl;
+    line-height: calc(#{$xl} + 8px);
+  }
+}
+
+// used to add borders around elements that don't normally have a border
+// for the two high contrast settings
+// pass no arguments for all sides or up to 4 arguments to specify which side
+// i.e. (top, right, bottom, left)
+@mixin a11y-high-contrast-borders($side1: false, $side2: false, $side3: false, $side4: false) {
+  .contrast-light & {
+    @if $side1 == false { //default for when no argument (side) is passed in
+      border: 2px solid $contrast-light-foreground;
+    }
+    @if $side1 {
+      border-#{$side1}: 2px solid $contrast-light-foreground;
+    }
+    @if $side2 {
+      border-#{$side2}: 2px solid $contrast-light-foreground;
+    }
+    @if $side3 {
+      border-#{$side3}: 2px solid $contrast-light-foreground;
+    }
+    @if $side4 {
+      border-#{$side4}: 2px solid $contrast-light-foreground;
+    }
+  }
+  .contrast-dark & {
+    @if $side1 == false {
+      border: 2px solid $contrast-dark-foreground;
+    }
+    @if $side1 {
+      border-#{$side1}: 2px solid $contrast-dark-foreground;
+    }
+    @if $side2 {
+      border-#{$side2}: 2px solid $contrast-dark-foreground;
+    }
+    @if $side3 {
+      border-#{$side3}: 2px solid $contrast-dark-foreground;
+    }
+    @if $side4 {
+      border-#{$side4}: 2px solid $contrast-dark-foreground;
+    }
+  }
+}
+
+// used instead of the borders mixin in the rare case where you want the look of
+// a 2px border without affecting the size of the element. No "side" arguments
+// because that doesn't work with the outline property
+@mixin a11y-high-contrast-outline() {
+  .contrast-light & {
+    outline: 2px solid $contrast-light-foreground;
+  }
+  .contrast-dark & {
+    outline: 2px solid $contrast-dark-foreground;
+  }
+}
+
+// used to set background color for the two high contrast settings on
+// elements that normally have unique background color
+@mixin a11y-high-contrast-background() {
+  .contrast-light & {
+    background: $contrast-light-background;
+  }
+  .contrast-dark & {
+    background: $contrast-dark-background;
+  }
+}
+
+// used to set background color to the alt for the two high contrast settings on
+// elements that normally have unique background color
+@mixin a11y-high-contrast-background-alt() {
+  .contrast-light & {
+    background: $contrast-light-background-alt;
+  }
+  .contrast-dark & {
+    background: $contrast-dark-background-alt;
+  }
+}
+
+// used to set text color for the two high contrast settings on
+// elements that normally have unique text color
+@mixin a11y-high-contrast-text() {
+  .contrast-light & {
+    color: $contrast-light-foreground;
+  }
+  .contrast-dark & {
+    color: $contrast-dark-foreground;
+  }
+}
+
+// used to set fill color for the two high contrast settings on
+// icons that normally have unique fill color
+@mixin a11y-high-contrast-icon() {
+  .contrast-light & {
+    fill: $contrast-light-foreground;
+  }
+  .contrast-dark & {
+    fill: $contrast-dark-foreground;
+  }
+}
+
+// used to change the border-color of elements that already have a border
+// for all three alternate contrast settings
+@mixin a11y-contrast-border-colors() {
+  .contrast-low & {
+    border-color: $contrast-low-foreground;
+  }
+  .contrast-light & {
+    border-color: $contrast-light-foreground;
+  }
+  .contrast-dark & {
+    border-color: $contrast-dark-foreground;
+  }
+}
